@@ -1,0 +1,11 @@
+Host: scholar.google.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:48.0) Gecko/20100101 Firefox/48.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://scholar.google.com/scholar?q=yolo+swag&btnG=&hl=en&as_sdt=0%2C5
+Cookie: SID=5QHTKBeCAbNrN77lIBov3ADtyNEVXJHcnDlqq7-zYUR5mZrNEwfuTuYv3hJOHhWCg5G0Hg.; HSID=Av5RQPzZ01lm_iIN9; SSID=AD6DF3IzEDoyN3Yx8; APISID=gU9bmu90fcs9oOgq/AxWgyZhsA_75DzPxY; SAPISID=54MsqrWL750_S96t/A61ztVKRQo7O9GTtR; NID=86=YRzEOExGa6qv0kp8DEziSd9KEKD2G3UuguMzFffzYtD-iQcJ4c_Xz6vV75o49Q5UbWMkHx7U-3c1PvCaz6jy0lxB0g2UzQ8cRiermn0409TuOrvQiP-e7ogyvbFS7gD4s8GAF1x4ixw6b1IHrenBXWjMZSA5aqWHS4jli8jQFA1XS2WHZEH0QjPi1flnQ0CAGuQPAae1X0X_kGV9mueO5vCzZ_1oVMDUnB9Fh8TmR-U7KO1Gb91R3yTW6ddJQosh; GSP=A=Jur-sQ:CPTS=1473242393:LM=1473242393:S=kyEr1QpQhJmyvGbz
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+Pragma: no-cache
+Cache-Control: no-cache
