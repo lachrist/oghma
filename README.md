@@ -1,3 +1,3 @@
-# oghma
+# Oghma
 
-Perform a transitive closure of some seminal works based on the citation graph provided by [google.scholar](https://scholar.google.com/).
+Scrape a citation graph from [google.scholar](https://scholar.google.com/) starting from some seminal works.
