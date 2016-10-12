@@ -5,7 +5,7 @@
 , "repository": "lachrist/oghma"
 , "homepage": "http://github.com/lachrist/oghma"
 , "license" : "MIT"
-, "dependencies": {}
+, "dependencies": {"node-notifier": "4.6.x", "selenium-webdriver":"*"}
 , "main": "main.js"
 , "bin": "bin.js"
 , "keywords" : ["Citation", "Google scholar", "Scraper", "Transitive closure"]
