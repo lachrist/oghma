@@ -1,5 +1,5 @@
 { "name" : "oghma"
-, "description" : "Oghma (responsibly) scrapes citation graphs from google.scholar"
+, "description" : "Oghma (responsibly) scrapes citation graphs from google-scholar"
 , "version" : "0.0.0"
 , "author" : {"name":"Laurent Christophe", "email":"lachrist@vub.ac.be"}
 , "repository": "lachrist/oghma"

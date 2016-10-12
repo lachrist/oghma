@@ -1,14 +1,14 @@
-# Oghma <img src="readme/oghma.png" align="right" alt="oghma-logo" title="Oghma"/>
+# Oghma <img src="oghma.png" align="right" alt="oghma-logo" title="Oghma"/>
 
-Oghma is a command-line tool for scraping a citation graph from [google.scholar](https://scholar.google.com/) starting from some seminal works.
-[google.scholar](https://scholar.google.com/) will prompt a captcha from time to time even though Oghma uses Selenium and only launch requests every 5 to 10 seconds.
+Oghma is a command-line tool for scraping a citation graph from [google-scholar](https://scholar.google.com/) starting from some seminal works.
+[google-scholar](https://scholar.google.com/) will prompt a captcha from time to time even though Oghma uses Selenium and only launch requests every 5 to 10 seconds.
 In which case a notification will pop-up; once you resolved the capcha, you can press enter in the terminal to resume the scraping.
 Using a Firefox profile can help to remain undercover; being logged in a gmail account in this profile is even better.
 
 The format used by Oghma to store persistant data are JSON objects with trailing newlines.
 Therefore the following function can be used to parse Oghma's files:
 
-```
+```js
 function read (path) {
   var lines = require("fs").readFileSync(path, "utf8").split("\n");
   lines.pop(); // remove the last empty line
@@ -21,10 +21,10 @@ Oghma works with 3 files:
   2. `--edges`: edges of the citation graph.
      Each line of this file is a list of integer which should be understood as the index of the nodes that are citing the node at the current line:
 
-     ```
-     function nodeAt (index) { return nodes[index] }
+     ```js
      var nodes = read("/path/to/nodes.json");
      var edges = read("/path/to/edges.json");
+     function nodeAt (index) { return nodes[index] }
      for (var i=0; i<edges.length; i++)
        nodes[i].citedBy = edges[i].map(nodeAt);
      ```
