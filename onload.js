@@ -12,31 +12,38 @@ var locators = {
 
 module.exports = function (driver, callback) {
   driver.executeScript("return document.readyState;").then(function (state) {
-    if (state !== "complete")
-      return setTimeout(module.exports, 500, driver, callback);
-    driver.findElements(locators.h1).then(function (elements) {
-      for (var i=0; i<elements.length; i++)
-        if (elements[i].getText() === "We're sorry...")
-          return setTimeout(function () {
-            driver.navigate().refresh();
-            module.exports(driver, callback);
-          }, 60000 + Math.ceil(6000 * Math.random()));
-      driver.findElements(locators.captcha).then(function (captchas) {
-        if (captchas.length === 0)
-          return driver.findElement(locators.results).then(function (results) {
-            results.findElements(locators.hit).then(callback);
-          });
-        NodeNotifier.notify({
-          title: "Oghma",
-          message: "Please show you're not a robot",
-          icon: __dirname+"/oghma.png"
-        });
-        var readline = Readline.createInterface({input:process.stdin, output:process.stdout});
-        return readline.question("Resolve the captcha and press <enter> when done...", function () {
-          readline.close();
-          module.exports(driver, callback);
-        });
-      });
-    });
+    if (state === "complete")
+      return sorry(driver, callback)
+    setTimeout(module.exports, 500, driver, callback);
   });
 };
+
+function sorry (driver, callback) {
+  driver.getTitle().then(function (title) {
+    if (title !== "Sorry...")
+      return captcha(driver, callback);
+    setTimeout(function () {
+      driver.navigate().refresh();
+      module.exports(driver, callback);
+    }, 60000 + Math.ceil(6000 * Math.random()));
+  })
+}
+
+function captcha (driver, callback) {
+  driver.findElements(locators.captcha).then(function (captchas) {
+    if (captchas.length === 0)
+      return driver.findElement(locators.results).then(function (results) {
+        results.findElements(locators.hit).then(callback);
+      });
+    NodeNotifier.notify({
+      title: "Oghma",
+      message: "Please show you're not a robot",
+      icon: __dirname+"/oghma.png"
+    });
+    var readline = Readline.createInterface({input:process.stdin, output:process.stdout});
+    return readline.question("Resolve the captcha and press <enter> when done...", function () {
+      readline.close();
+      module.exports(driver, callback);
+    });
+  });
+}
