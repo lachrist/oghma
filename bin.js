@@ -12,7 +12,7 @@ var args = Minimist(process.argv.slice(2));
   args[name] = args[name] || args[name[0]];
 });
 
-if (!((args.seminal && args.node) || (args.nodes && args.edges && args.recover)))
+if (!((args.seminal && args.nodes) || (args.nodes && args.edges && args.recover)))
   throw [
     "Arguments: ",
     "  --nodes   path/to/nodes.json",
