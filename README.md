@@ -1,9 +1,14 @@
 # Oghma <img src="oghma.png" align="right" alt="oghma-logo" title="Oghma"/>
 
 Oghma is a command-line tool for scraping a citation graph from [google-scholar](https://scholar.google.com/) starting from some seminal works.
-[google-scholar](https://scholar.google.com/) will prompt a captcha from time to time even though Oghma uses Selenium and only launch requests every 5 to 10 seconds.
-In which case a notification will pop-up; once you resolved the capcha, you can press enter in the terminal to resume the scraping.
-Using a Firefox profile can help to remain undercover; being logged in a gmail account in this profile is even better.
+[google-scholar](https://scholar.google.com/) will prompt a captcha from time to time even though Oghma uses Selenium and only launches requests every 5 to 10 seconds.
+In which case a notification will pop-up; once you resolved the capcha, you can press `<enter>` in the terminal to resume the scraping.
+Using a Firefox profile can help to remain undercover; being logged in a [gmail](https://mail.google.com) account in this profile is even better.
+To install Oghma run:
+
+```
+npm install oghma
+```
 
 The format used by Oghma to store persistant data are JSON objects with trailing newlines.
 Therefore the following function can be used to parse Oghma's files:
@@ -17,8 +22,9 @@ function read (path) {
 ```
 
 Oghma works with 3 files:
-  1. `--nodes`: nodes of the citation graph.
-  2. `--edges`: edges of the citation graph.
+  1. `--recover`: data for resuming the scraping when it has been interrupted in any way.
+  2. `--nodes`: nodes of the citation graph.
+  3. `--edges`: edges of the citation graph.
      Each line of this file is a list of integer which should be understood as the index of the nodes that are citing the node at the current line:
 
      ```js
@@ -26,14 +32,12 @@ Oghma works with 3 files:
      var edges = read("/path/to/edges.json");
      function nodeAt (index) { return nodes[index] }
      for (var i=0; i<edges.length; i++)
-       nodes[i].citedBy = edges[i].map(nodeAt);
+       nodes[i].citers = edges[i].map(nodeAt);
      ```
-
-  3. `--recover`: data for resuming the scraping when it has been interrupted in any way.
 
 ## Add a seminal work
 
-Add a new node if it does not already exists:
+Add a new node if it does not already exist:
 
 ```
 oghma --seminal "An exact paper's title" --nodes path/to/nodes.json [--profile path/to/firefox-profile]
