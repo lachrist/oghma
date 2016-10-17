@@ -2,10 +2,9 @@
 
 var Fs = require("fs");
 var Minimist = require("minimist");
-var SeleniumWebdriver = require("selenium-webdriver");
-var Firefox = require("selenium-webdriver/firefox");
 var Oghma = require("./main.js");
 var Db = require("./db.js");
+var Driver = require("./driver.js");
 
 var args = Minimist(process.argv.slice(2));
 ["nodes", "edges", "recover", "profile", "seminal"].forEach(function (name) {
@@ -22,9 +21,7 @@ if (!((args.seminal && args.nodes) || (args.nodes && args.edges && args.recover)
     " [--seminal \"A paper EXACT title\"]"
   ].join("\n")+"\n";
 
-var driver = args.profile
-  ? (new Firefox.Driver(new Firefox.Options().setProfile(new Firefox.Profile(args.profile))))
-  : (new SeleniumWebdriver.Builder().forBrowser("firefox").build());
+var driver = Driver(args.profile);
 
 if (args.seminal) {
   Oghma.seminal(driver, args.seminal, Db(args.nodes), function (index) {

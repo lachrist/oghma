@@ -13,7 +13,7 @@ var locators = {
 module.exports = function (driver, callback) {
   driver.executeScript("return document.readyState;").then(function (state) {
     if (state === "complete")
-      return sorry(driver, callback)
+      return sorry(driver, callback);
     setTimeout(module.exports, 500, driver, callback);
   });
 };
@@ -22,14 +22,18 @@ function sorry (driver, callback) {
   driver.getTitle().then(function (title) {
     if (title !== "Sorry...")
       return captcha(driver, callback);
+    var sleep = Math.ceil(2 * 60 * 1000 * (1 + Math.random()));
+    process.stderr.write("Too many requests, Oghma will sleep for "+sleep+"[ms]...\n");
     setTimeout(function () {
-      driver.navigate().refresh();
-      module.exports(driver, callback);
-    }, 60000 + Math.ceil(6000 * Math.random()));
-  })
+      driver.reinit(function () {
+        module.exports(driver, callback)
+      });
+    }, sleep);
+  });
 }
 
 function captcha (driver, callback) {
+  sleep = 0;
   driver.findElements(locators.captcha).then(function (captchas) {
     if (captchas.length === 0)
       return driver.findElement(locators.results).then(function (results) {
