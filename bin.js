@@ -1,41 +1,25 @@
 #!/usr/bin/env node
 
-var Fs = require("fs");
 var Minimist = require("minimist");
 var Oghma = require("./main.js");
-var Db = require("./db.js");
-var Driver = require("./driver.js");
 
 var args = Minimist(process.argv.slice(2));
-["nodes", "edges", "recover", "profile", "seminal"].forEach(function (name) {
-  args[name] = args[name] || args[name[0]];
-});
 
-if (!((args.seminal && args.nodes) || (args.nodes && args.edges && args.recover)))
-  throw [
+if (!args.nodes || !args.edges) {
+  process.stderr.write([
     "Arguments: ",
     "  --nodes   path/to/nodes.json",
     "  --edges   path/to/edges.json",
-    "  --recover path/to/recover.swp",
-    " [--profile path/to/firefox-profile]",
-    " [--seminal \"A paper EXACT title\"]"
-  ].join("\n")+"\n";
-
-var driver = Driver(args.profile);
-
-if (args.seminal) {
-  Oghma.seminal(driver, args.seminal, Db(args.nodes), function (index) {
-    process.stdout.write("Seminal paper: "+JSON.stringify(args.seminal)+" is at position "+index+"\n");
-    driver.quit();
-  });
-} else {
-  var nodes = Db(args.nodes);
-  var edges = Db(args.edges);
-  var loop = function (rest) {
-    Fs.truncateSync(args.recover, 0);
-    rest
-      ? Oghma.explore(driver, nodes, edges, Db(args.recover), loop)
-      : driver.quit();
-  }
-  Oghma.explore(driver, nodes, edges, Db(args.recover), loop);
+    " [--delay   5000]",
+    " [--limit   1000]",
+    " [--cite    0]",
+    " [--profile path/to/firefox-profile]"
+  ].join("\n")+"\n");
+  process.exit(1);
 }
+
+args.delay = Number(args.delay || 5000);
+args.cite = Number(args.cite || 0);
+args.limit = Number(args.limit || 1000);
+
+Oghma(args);

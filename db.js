@@ -4,10 +4,7 @@
 
 var Fs = require("fs");
 
-function strip (xs) {
-  xs.pop()
-  return xs;
-}
+function notempty (line) { return line !== "" }
 
 module.exports = function (path) {
   try {
@@ -18,13 +15,10 @@ module.exports = function (path) {
     xs = "";
   }
   var fd = Fs.openSync(path, "a");
-  xs = strip(xs.split("\n")).map(JSON.parse);
+  xs = xs.split("\n").filter(notempty).map(JSON.parse);
   xs.insert = function (x) {
     Fs.writeSync(fd, JSON.stringify(x)+"\n", "utf8");
     return xs.push(x) - 1;
-  }
-  xs.close = function () {
-    Fs.closeSync(fd);
   }
   return xs;
 };
